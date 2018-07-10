@@ -27,12 +27,12 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file("./keystore/debug.keystore")
-            storePassword "testres"
-            keyAlias "testres"
-            keyPassword "testres"
-        }
+//        debug {
+//            storeFile file("./keystore/debug.keystore")
+//            storePassword "testres"
+//            keyAlias "testres"
+//            keyPassword "testres"
+//        }
 
         release {
             storeFile file("./keystore/release.keystore")
@@ -95,14 +95,24 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+   // androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    testImplementation "org.robolectric:robolectric:3.8"
+
+
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     api 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+
+    //glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+    // If you want to use the GPU Filters
+   // implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
 
     api "com.android.support:multidex:1.0.3" // 多dex配置
     //注释掉原有bugly的仓库
