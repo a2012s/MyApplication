@@ -6,8 +6,6 @@ import android.support.multidex.MultiDex;
 
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
-import com.tencent.tinker.loader.app.TinkerApplication;
-import com.tencent.tinker.loader.shareutil.ShareConstants;
 
 /**
  * 作者：wjj99@qq.com
@@ -22,6 +20,7 @@ public class SampleApplication extends Application {
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId
         // 调试时，将第三个参数改为true
         Bugly.init(this, "c410897b35", true);
+
     }
 
     @Override

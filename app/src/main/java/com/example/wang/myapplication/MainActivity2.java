@@ -3,6 +3,7 @@ package com.example.wang.myapplication;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.example.wang.myapplication.databinding.ActivityMainBinding;

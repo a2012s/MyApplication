@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.example.wang.myapplication.databinding.ActivityMainBinding;
 import com.example.wang.myapplication.utils.GlideUtils;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class Glide4Activity extends AppCompatActivity {
 
     //Data Binding为我们生成了databinding包，以及ActivityMainBinding类
@@ -34,8 +36,9 @@ public class Glide4Activity extends AppCompatActivity {
         ImageView iv3 = findViewById(R.id.iv_test3);
         ImageView iv4 = findViewById(R.id.iv_test4);
 
+
         GlideUtils.loadImage(context,URL,iv);
-        GlideUtils.loadBlurImage(context,URL,iv2,50);
+        GlideUtils.loadBlurImage(context,URL,iv2,100);
         GlideUtils.loadRoundCircleImage(context,URL,iv3);
         GlideUtils.loadCircleImage(context,URL,iv4);
 
