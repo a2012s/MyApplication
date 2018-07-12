@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 
 import com.example.wang.myapplication.R;
@@ -23,9 +25,12 @@ public class WordsActivity extends AppCompatActivity {
 
     private int iNow = 0;
     private int num = 1;
+    private int wordsCount = 10;
     private static final int LEFT = 1;
     private static final int MID = 2;
     private static final int RIGHT = 3;//right
+
+    private ProgressBar mProgressBarHorizontal;
 
 
     private AppCompatImageView iv_next, iv_replay, iv_play;
@@ -46,14 +51,31 @@ public class WordsActivity extends AppCompatActivity {
 
     private void initView() {
         iv_next = findViewById(R.id.iv_next);
+        mProgressBarHorizontal = findViewById(R.id.pb_w);
         iv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchFragment(third, RIGHT).commit();
+
+
+                if (num >= wordsCount) {
+                    Toast.makeText(WordsActivity.this, "完成了", Toast.LENGTH_SHORT).show();
+                } else {
+                    switchFragment(third, RIGHT).commit();
+                }
             }
         });
         iv_replay = findViewById(R.id.iv_replay);
         iv_play = findViewById(R.id.iv_play);
+
+        mProgressBarHorizontal.setMax(wordsCount);
+
+
+        iv_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iv_play.setImageResource(R.drawable.ic_pause);
+            }
+        });
     }
 
     //Fragment优化
@@ -95,6 +117,7 @@ public class WordsActivity extends AppCompatActivity {
 
 
         EventBus.getDefault().post(new MessageEvent(num));
+        mProgressBarHorizontal.setProgress(num);
 
         iNow = i;
 
