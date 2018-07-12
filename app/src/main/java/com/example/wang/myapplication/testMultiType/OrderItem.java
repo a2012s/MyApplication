@@ -5,20 +5,20 @@ import android.support.annotation.NonNull;
 /**
  * Created by wjj on 2018/7/11 15:13
  * E-Mail ：wjj99@qq.com
- * 描述：
+ * 描述：我的订单页
  */
 public class OrderItem {
 
     public final @NonNull
-    String url;
+    String url;//图片
     public final @NonNull
-    String name;
+    String name;//
     public final @NonNull
-    String nameDetails;
+    String nameDetails;//
     public final @NonNull
-    String time;
+    String time;//有效期
     public final @NonNull
-    String apply;
+    String apply;//适用
     public final @NonNull
     String cost;
 

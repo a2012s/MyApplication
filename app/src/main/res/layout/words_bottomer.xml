@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="157dp"
+    tools:context="com.example.wang.myapplication.testWords.WordsActivity">
+
+    <ProgressBar
+        android:id="@+id/pb_w"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="42dp"
+        android:background="#E6E6E6" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_play"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_below="@id/pb_w"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        app:srcCompat="@drawable/ic_play" />
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_replay"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="85dp"
+        app:srcCompat="@drawable/ic_re_play" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_next"
+        android:layout_width="25dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="85dp"
+        app:srcCompat="@drawable/ic_next" />
+
+
+</RelativeLayout>

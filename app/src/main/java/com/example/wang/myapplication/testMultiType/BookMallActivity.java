@@ -27,14 +27,15 @@ import android.widget.Toast;
 
 import com.example.wang.myapplication.R;
 
-import java.util.Random;
-
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
-public class TestOrderActivity extends Activity {
+/**
+ * 购物商城页
+ */
+public class BookMallActivity extends Activity {
 
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -56,12 +57,12 @@ public class TestOrderActivity extends Activity {
         adapter = new MultiTypeAdapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.register(OrderItem.class, new OrderItemViewBinder());
+        adapter.register(BookMallItem.class, new BookMallItemViewBinder());
 
         urlHead = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=302701032,2300144492&fm=27&gp=0.jpg";
         items = new Items();
         for (int i = 0; i < 10; i++) {
-            items.add(new OrderItem(urlHead, "付费课程包", "内含10本书", "2017.01.01-2019.01.01", "初中", "已购买"));
+            items.add(new BookMallItem(urlHead, "付费课程包", "内含10本书", "初中"));
         }
         adapter.setItems(items);
         adapter.notifyDataSetChanged();
@@ -90,11 +91,11 @@ public class TestOrderActivity extends Activity {
                         //items.add(new HeavyItem("我是天才" + random.nextInt(100) + "号"));
                         items.clear();
                         for (int i = 0; i < 10; i++) {
-                            items.add(new OrderItem(urlHead, "付费课程包", "内含11本书", "2018.01.01-2019.01.01", "初中、高中", "赠送"));
+                            items.add(new BookMallItem(urlHead, "付费课程包", "内含11本书", "初中、高中"));
                         }
                         adapter.notifyDataSetChanged();
 
-                        Toast.makeText(TestOrderActivity.this, "刷新了数据", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BookMallActivity.this, "刷新了数据", Toast.LENGTH_SHORT).show();
 
                         // 加载完数据设置为不刷新状态，将下拉进度收起来
                         swipeRefreshLayout.setRefreshing(false);

@@ -5,6 +5,7 @@ apply plugin: 'walle'
 
 android {
     compileSdkVersion 28
+
     defaultConfig {
         applicationId "com.example.wang.myapplication"
         minSdkVersion 19
@@ -13,6 +14,8 @@ android {
         versionName "1.0"
         // 开启multidex
         multiDexEnabled true
+        //增加对Vector兼容性的支持（5.0以下机型）
+        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -96,7 +99,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-   // androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    // androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     testImplementation "org.robolectric:robolectric:3.8"
 
 
@@ -111,7 +114,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     // If you want to use the GPU Filters
-   // implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    // implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
     implementation 'me.drakeet.multitype:multitype:3.4.4'
 
@@ -124,6 +127,8 @@ dependencies {
     api 'com.tencent.tinker:tinker-android-lib:1.9.6'
     api 'com.tencent.bugly:nativecrashreport:3.3.1' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如3.3.1
     api 'com.meituan.android.walle:library:1.1.6'
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
 
 }
