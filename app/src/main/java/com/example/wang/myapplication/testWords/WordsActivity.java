@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -32,6 +33,7 @@ public class WordsActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBarHorizontal;
 
+    private TextView tv_left, tv_right;
 
     private AppCompatImageView iv_next, iv_replay, iv_play;
 
@@ -52,11 +54,14 @@ public class WordsActivity extends AppCompatActivity {
     private void initView() {
         iv_next = findViewById(R.id.iv_next);
         mProgressBarHorizontal = findViewById(R.id.pb_w);
+        tv_left = findViewById(R.id.tv_left);
+        tv_right = findViewById(R.id.tv_right);
+
+
         iv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                tv_left.setText(num+"/"+wordsCount);
                 if (num >= wordsCount) {
                     Toast.makeText(WordsActivity.this, "完成了", Toast.LENGTH_SHORT).show();
                 } else {
