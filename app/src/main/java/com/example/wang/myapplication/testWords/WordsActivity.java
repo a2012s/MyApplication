@@ -61,7 +61,7 @@ public class WordsActivity extends AppCompatActivity {
         iv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_left.setText(num+"/"+wordsCount);
+                tv_left.setText(num + "/" + wordsCount);
                 if (num >= wordsCount) {
                     Toast.makeText(WordsActivity.this, "完成了", Toast.LENGTH_SHORT).show();
                 } else {

@@ -1,5 +1,6 @@
 package com.example.wang.myapplication.TestHellocharts;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -32,16 +33,32 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class LineChartActivity extends AppCompatActivity {
 
+    private ColorArcProgressBar bar_annulus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
 
+       bar_annulus = findViewById(R.id.bar_annulus);
+        int num = (int) (Math.random() * 100 + 1);//1到100的随机数
+
+
+        bar_annulus.setCurrentValues(num);
+
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment, new PlaceholderFragment()).commit();
         }
+    }
+
+    /**
+     * dp转换成px
+     */
+    private int dp2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
 

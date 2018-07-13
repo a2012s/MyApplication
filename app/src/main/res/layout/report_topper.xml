@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="187dp"
+    android:background="#EA9308"
+    tools:context="com.example.wang.myapplication.testWords.WordsActivity">
+
+
+    <com.example.wang.myapplication.TestHellocharts.ColorArcProgressBar
+        android:id="@+id/bar_annulus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:back_color="@android:color/holo_blue_light"
+        app:back_width="2dp"
+        app:diameter="125dp"
+        app:front_color1="@color/colorAccent"
+        app:front_width="2dp"
+        app:is_need_content="true"
+        app:is_need_unit="true"
+        app:max_value="100"
+        app:string_unit="百分比%"
+        app:total_engle="360" />
+
+
+</RelativeLayout>
