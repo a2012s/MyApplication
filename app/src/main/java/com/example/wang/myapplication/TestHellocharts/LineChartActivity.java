@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,8 +53,8 @@ public class LineChartActivity extends AppCompatActivity {
         private LineChartView chart;
         private LineChartData data;
         private int numberOfLines = 1;
-        private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
+        private int maxNumberOfLines = 4;//
+        private int numberOfPoints = 10;//十个点的统计数据
 
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
@@ -81,7 +80,7 @@ public class LineChartActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
-          //  mToolbar = rootView.findViewById(R.id.toolbar);
+            //  mToolbar = rootView.findViewById(R.id.toolbar);
             //setSupportActionBar(mToolbar);
 
             chart = rootView.findViewById(R.id.chart);
