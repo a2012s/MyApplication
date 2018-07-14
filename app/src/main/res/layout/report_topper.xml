@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="187dp"
-    android:background="#EA9308"
+    android:background="#FEC006"
     tools:context="com.example.wang.myapplication.testWords.WordsActivity">
 
 
@@ -17,12 +17,14 @@
         app:back_color="@android:color/holo_blue_light"
         app:back_width="2dp"
         app:diameter="125dp"
-        app:front_color1="@color/colorAccent"
+        app:front_color1="@color/white"
         app:front_width="2dp"
         app:is_need_content="true"
         app:is_need_unit="true"
+        app:is_need_title="true"
         app:max_value="100"
-        app:string_unit="百分比%"
+        app:string_title="81/100"
+        app:string_unit="做题正确率"
         app:total_engle="360" />
 
 

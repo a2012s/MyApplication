@@ -5,6 +5,7 @@
         <attr name="front_color1" format="color" />
         <attr name="front_color2" format="color" />
         <attr name="front_color3" format="color" />
+        <attr name="arc_bg" format="color" />
         <attr name="back_width" format="dimension" />
         <attr name="front_width" format="dimension" />
         <attr name="is_need_title" format="boolean" />

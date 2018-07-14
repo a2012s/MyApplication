@@ -34,6 +34,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class LineChartActivity extends AppCompatActivity {
 
     private ColorArcProgressBar bar_annulus;
+    private int num;
 
 
     @Override
@@ -41,11 +42,22 @@ public class LineChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
 
-       bar_annulus = findViewById(R.id.bar_annulus);
-        int num = (int) (Math.random() * 100 + 1);//1到100的随机数
+        bar_annulus = findViewById(R.id.bar_annulus);
+        num = (int) (Math.random() * 100 + 1);//1到100的随机数
 
 
+        bar_annulus.setTitle(num + "/100");
         bar_annulus.setCurrentValues(num);
+
+
+        bar_annulus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                num = (int) (Math.random() * 100 + 1);//1到100的随机数
+                bar_annulus.setCurrentValues(num);
+                bar_annulus.setTitle(num + "/100");
+            }
+        });
 
 
         if (savedInstanceState == null) {
