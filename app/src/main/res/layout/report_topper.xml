@@ -20,12 +20,66 @@
         app:front_color1="@color/white"
         app:front_width="2dp"
         app:is_need_content="true"
-        app:is_need_unit="true"
         app:is_need_title="true"
+        app:is_need_unit="true"
         app:max_value="100"
         app:string_title="81/100"
         app:string_unit="正确率"
         app:total_engle="360" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="-15dp"
+        android:layout_toLeftOf="@+id/bar_annulus">
+
+        <TextView
+            android:id="@+id/study_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0.5 h"
+            android:textColor="#353535"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/study_time"
+            android:layout_centerHorizontal="true"
+            android:text="学习时长"
+            android:textColor="#353535"
+            android:textSize="12sp" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="-15dp"
+        android:layout_toRightOf="@+id/bar_annulus">
+
+        <TextView
+            android:id="@+id/study_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="6"
+            android:textColor="#353535"
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/study_frequency"
+            android:layout_centerHorizontal="true"
+            android:text="学习次数"
+            android:textColor="#353535"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
