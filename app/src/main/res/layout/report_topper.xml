@@ -24,7 +24,7 @@
         app:is_need_title="true"
         app:max_value="100"
         app:string_title="81/100"
-        app:string_unit="做题正确率"
+        app:string_unit="正确率"
         app:total_engle="360" />
 
 

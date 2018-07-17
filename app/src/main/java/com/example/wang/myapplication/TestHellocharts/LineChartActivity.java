@@ -88,7 +88,7 @@ public class LineChartActivity extends AppCompatActivity {
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
         private boolean hasAxes = true;
-        private boolean hasAxesNames = true;
+        private boolean hasAxesNames = false;
         private boolean hasLines = true;
         private boolean hasPoints = true;
         private ValueShape shape = ValueShape.CIRCLE;
@@ -115,8 +115,15 @@ public class LineChartActivity extends AppCompatActivity {
             chart = rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
+            toggleCubic();//显示弧线还是直线
+//            chart.setValueSelectionEnabled(true);//显示数字
             // Generate some random values.
+
+            toggleLabels();
+
+
             generateValues();
+
 
             generateData();
 
@@ -355,6 +362,7 @@ public class LineChartActivity extends AppCompatActivity {
             isCubic = !isCubic;
 
             generateData();
+
 
             if (isCubic) {
                 // It is good idea to manually set a little higher max viewport for cubic lines because sometimes line

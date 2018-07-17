@@ -51,9 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
+        android:paddingBottom="12dp"
         android:text="适用学段:"
         android:textSize="15sp"
-        android:paddingBottom="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
@@ -68,7 +68,6 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/tv_apply"
         app:layout_constraintTop_toBottomOf="@id/tv_name" />
-
 
 
     <TextView
