@@ -241,13 +241,6 @@ public class LineChartActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
 
-        private void generateValues() {
-            for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
-                }
-            }
-        }
 
         private void reset() {
             numberOfLines = 1;
@@ -276,6 +269,14 @@ public class LineChartActivity extends AppCompatActivity {
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);
             chart.setCurrentViewport(v);
+        }
+
+        private void generateValues() {
+            for (int i = 0; i < maxNumberOfLines; ++i) {
+                for (int j = 0; j < numberOfPoints; ++j) {
+                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
+                }
+            }
         }
 
         private void generateData() {
@@ -307,8 +308,10 @@ public class LineChartActivity extends AppCompatActivity {
             data = new LineChartData(lines);
 
             if (hasAxes) {
-                Axis axisX = new Axis();
-                Axis axisY = new Axis().setHasLines(true);
+                Axis axisX = new Axis().setHasSeparationLine(true).setHasLines(true);
+                // Axis axisY = new Axis().setHasLines(false);
+                Axis axisY = new Axis().setHasSeparationLine(false).setHasLines(false)
+                        .setHasTiltedLabels(false).setHasTiltedLabels(false);
                 if (hasAxesNames) {
                     axisX.setName("Axis X");
                     axisY.setName("Axis Y");

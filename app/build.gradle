@@ -7,7 +7,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.example.wang.myapplication"
+        applicationId "com.example.wang.myapplication.test"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

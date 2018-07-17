@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/but_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/but_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2" />
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </lecho.lib.hellocharts.view.LineChartView>
+
+</LinearLayout>

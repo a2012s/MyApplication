@@ -1,40 +1,285 @@
 package com.example.wang.myapplication.TestHellocharts;
 
-import android.databinding.DataBindingUtil;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.wang.myapplication.R;
-import com.example.wang.myapplication.User;
-import com.example.wang.myapplication.databinding.ActivityMainBinding;
 
-public class MyReportActivity extends AppCompatActivity {
 
-    //Data Binding为我们生成了databinding包，以及ActivityMainBinding类
-    private ActivityMainBinding binding;
-    private User user;
-    private int n = 0;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import lecho.lib.hellocharts.animation.ChartAnimationListener;
+import lecho.lib.hellocharts.formatter.LineChartValueFormatter;
+import lecho.lib.hellocharts.formatter.SimpleLineChartValueFormatter;
+import lecho.lib.hellocharts.gesture.ContainerScrollType;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.ValueShape;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.view.LineChartView;
+
+public class MyReportActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private LineChartView chartView;
+    private Button but_1;
+    private Button but_2;
+
+    //    折线集合（add多个line就会显示对条线）
+    List chartlines = new ArrayList();
+    //    横坐标集合，可以设置标注名称，就是x轴的值集合，可以是0-100，也可以是10000-20000
+    List mAxisXValues = new ArrayList();
+    //    点的集合，顾名思义一个point，就有他所对应的x y值，假如有个点的值是（5,100）x=5 y=100
+    List pointValues = new ArrayList();
+    //    折线，多条折线可以new多个线，要显示谁，就在line集合里add谁
+    Line chartline = new Line();
+    //    线上的数据，鸡肋但必须得用
+    LineChartData lineChartData = new LineChartData();
+    //    定义格式，小数点等等信息
+    LineChartValueFormatter chartValueFormatter = new SimpleLineChartValueFormatter(2);
+    //    X轴、Y轴
+    Axis axisX = new Axis();
+    Axis axisY = new Axis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_line_chart2);
+        chartView = findViewById(R.id.chart1);
+        but_1 = findViewById(R.id.but_1);
+        but_2 = findViewById(R.id.but_2);
+        but_1.setOnClickListener(this);
+        but_2.setOnClickListener(this);
+    }
 
-        // 获取<data />标签对象
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_report);
+    public void setKLine(int type, List<DateForLine> list) {
+//        清空数据，将不影响下一次点击按钮 传过来一个新的list的显示
+        chartlines.clear();
+        mAxisXValues.clear();
+        pointValues.clear();
+        /*
+         * 这个循环是循环为x轴（x底端轴线）增加值应该只能是float类型的，当然int可以
+         */
+        for (DateForLine date : list) {
+//            第一进来的值假如是“201703041230”，处理完之后应该是4*24+12
+            String time = date.getTime();
+            AxisValue axisValue = new AxisValue(parseHour2Ten(time));
+//            这句话就关键了，你可以随意设置这个位置显示的东西，string类型的随意来
+//            我这边想设置，几月几日几时
+            axisValue.setLabel(subTimeDay(time) + "日" + subTimeHour(time) + "时");
+            mAxisXValues.add(axisValue);
+        }
 
-        user = new User();
-        user.firstName.set("wang");
-        user.lastName.set("btn");
-        binding.setUser(user);
+
+//        x轴完事了，该布点了
+        for (DateForLine date : list) {
+//            第一点的坐标假如是（4*24+12，25.5）  那么pointValue的参数就应该是这个
+            String time = date.getTime();
+            PointValue pointValue = new PointValue(parseHour2Ten(time), Float.parseFloat(date.getValue()));
+//            这个点的标注信息，String的随便来
+            if (type == 1) {
+                pointValue.setLabel(date.getValue() + "℃");
+//                温度显示小数
+                chartline.setFormatter(chartValueFormatter);
+            } else if (type == 2) {
+                pointValue.setLabel(date.getValue() + "%PH");
+//                温度显示整数就不用设置Formatter了
+            }
+//            把这个点添加到集合里去,等会显示用
+            pointValues.add(pointValue);
+        }
+//        把点的集合放在线上，显示多条线 就用不同的line分别添加不同的values
+        chartline.setValues(pointValues);
+//        线的颜色
+        chartline.setColor(Color.BLUE);
+//        点的颜色
+        chartline.setPointColor(Color.BLUE);
+//        形状，ValueShape提供了几个
+        chartline.setShape(ValueShape.CIRCLE);
+//        线的透明度
+//        chartline.setAreaTransparency(0);
+//        点的大小
+        chartline.setPointRadius(2);
+//        点上的标注信息，刚才 pointValues里面每个点的标注
+        chartline.setCubic(true);
+//        阴影面积
+        chartline.setFilled(false);
+//        是否用线显示。如果为false 则没有曲线只有点显示
+        chartline.setHasLines(true);
+//        是否用点显示。如果为false 则没有点
+        chartline.setHasPoints(true);
+//        点的标注是否显示
+        chartline.setHasLabels(true);
+//        线的粗细
+        chartline.setStrokeWidth(2);
+//        显示几条线，就可以分别设置每一条线，然后add进来
+        chartlines.add(chartline);
+
+//        线的集合放在chart数据中，
+        lineChartData.setLines(chartlines);
+
+/*        x轴上面的值，就是刚才mAxisXValues的值
+          5个参数分别是：
+          1-例如4*24+12 显示为4日12时
+          2-是否有x轴网格线
+          3-x轴信息标注颜色是黑色
+          4-x轴网格线白色
+          5-x轴信息标注字体12
+          6-x轴的大名
+          Y轴也是这么设置，当你想点击不同的按钮，显示不同的信息时可用type进行处理
+*/
+        axisX.setValues(mAxisXValues).setHasLines(true).setTextColor(Color.BLACK).setLineColor(Color.WHITE).setTextSize(12).setName("时间");
+        ;
+        axisY.setHasLines(true).setTextColor(Color.BLACK).setLineColor(Color.WHITE);
+        if (type == 1) {
+            axisY.setName("温度");
+        } else if (type == 2) {
+            axisY.setName("湿度");
+        }
+
+//        X轴上的标注数量,点少的时候可以这么用，点多的时候，就不建议这么用了
+//        axisX.setMaxLabelChars(8);
+//        x 轴在底部
+        lineChartData.setAxisXBottom(axisX);
+//        x 轴在顶部
+//        lineChartData.setAxisXTop(axisX);
+//        y 轴在左，也可以右边
+        lineChartData.setAxisYLeft(axisY);
+
+//        这两句话设置折线上点的背景颜色，默认是有一个小方块，而且背景色和点的颜色一样
+//        如果想要原来的效果可以不用这两句话，我的显示的是透明的
+        lineChartData.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        lineChartData.setValueLabelBackgroundEnabled(false);
+
+
+//        把数据放在chart里，设置完这句话其实就可以显示了
+        chartView.setLineChartData(lineChartData);
+
+
+//        设置行为属性，支持缩放、滑动以及平移，设置他就可以自己设置动作了
+        chartView.setInteractive(true);
+//        可放大
+        chartView.setZoomEnabled(true);
+//        我这边设置横向滚动
+        chartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+//        设置可视化视图样式，这里能做的东西非常多，
+        final Viewport v = new Viewport(chartView.getMaximumViewport());
+//        我设置两种。点击不同按钮时，y轴固定最大值最小值不一样
+//        这里可以固定x轴，让y轴变化，也可以x轴y轴都固定，也就是固定显示在你设定的区间里的点point（x，y）
+        if (type == 1) {
+            v.top = 50;
+            v.bottom = -50;
+        } else if (type == 2) {
+            v.top = 100;
+            v.bottom = 0;
+        }
+//        这句话非常关键，上面两种设置，来确定最大可视化样式
+//        我们可以理解为，所有点放在linechart时，整个视图全看到时候的样子，也就是点很多很多，距离很紧密
+        chartView.setMaximumViewport(v);
+//        接着我们要设置，我们打开这个页面时显示的样子
+//        如果你想所有，这两句话就不用了
+//        但是我只显示5个点以内 刚才插入的点应该是...（4*24+8，-15.5）（4*24+9，-15.5）（4*24+10，-3.5）（4*24+11，20.0）（4*24+12，8.5）
+//        x轴最右边就应该是x=4*24+12 的点 最左边就应该是x=4*24+8的点
+//        当然这个非常灵活，也可以固定显示y轴 最小多少，最大多少
+        v.left = parseHour2Ten(list.get(list.size() - 5).getTime());
+        v.right = parseHour2Ten(list.get(list.size() - 1).getTime());
+//        确定上两句话的设置
+        chartView.setCurrentViewport(v);
+
+
+//        还可以设置当前的动画效果，有兴趣的同学可以试一试
+        chartView.setViewportAnimationListener(new ChartAnimationListener() {
+            @Override
+            public void onAnimationStarted() {
+            }
+
+            @Override
+            public void onAnimationFinished() {
+                chartView.setMaximumViewport(v);
+                chartView.setViewportAnimationListener(null);
+
+            }
+        });
+        chartView.setCurrentViewport(v);
 
     }
 
-    //参数View必须有，必须是public，参数View不能改成对应的控件，只能是View，否则编译不通过
-    public void myClick(View view) {
-        n++;
-        // user.setFirstName("点击" + n);
-        user.firstName.set("点击哈" + n);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.but_1:
+                setline1();
+                break;
+            case R.id.but_2:
+                setLine2();
+                break;
+        }
+    }
+
+    private void setLine2() {
+        List<DateForLine> list2 = new ArrayList<>();
+        list2.add(new DateForLine("201703040130", "70"));
+        list2.add(new DateForLine("201703040230", "51"));
+        list2.add(new DateForLine("201703040330", "23"));
+        list2.add(new DateForLine("201703040430", "42"));
+        list2.add(new DateForLine("201703040530", "19"));
+        list2.add(new DateForLine("201703040630", "5"));
+        list2.add(new DateForLine("201703040730", "63"));
+        list2.add(new DateForLine("201703040830", "77"));
+        list2.add(new DateForLine("201703040930", "42"));
+        list2.add(new DateForLine("201703041030", "20"));
+        list2.add(new DateForLine("201703041130", "11"));
+        list2.add(new DateForLine("201703041230", "44"));
+        setKLine(2, list2);
+    }
+
+    private void setline1() {
+        List<DateForLine> list1 = new ArrayList<>();
+        list1.add(new DateForLine("201703040130", "20.8"));
+        list1.add(new DateForLine("201703040230", "3.5"));
+        list1.add(new DateForLine("201703040330", "10.6"));
+        list1.add(new DateForLine("201703040430", "-20"));
+        list1.add(new DateForLine("201703040530", "-6"));
+        list1.add(new DateForLine("201703040630", "5.5"));
+        list1.add(new DateForLine("201703040730", "-10.5"));
+        list1.add(new DateForLine("201703040830", "-8.7"));
+        list1.add(new DateForLine("201703040930", "5.8"));
+        list1.add(new DateForLine("201703041030", "20"));
+        list1.add(new DateForLine("201703041130", "17"));
+        list1.add(new DateForLine("201703041230", "25.5"));
+        setKLine(1, list1);
+    }
+
+
+    public String subTimeMonth(String time) {
+        return time.substring(4, 6);
+    }
+
+    public String subTimeDay(String time) {
+        return time.substring(6, 8);
+    }
+
+    //    把我得到的时间格式处理成小时
+    public String subTimeHour(String time) {
+        return time.substring(8, 10);
+    }
+
+    /*
+     *假如回来的时间是"201703151955"  2017年3月19日19:55
+     * 按照我的需求只要24小时内的值
+     * 在x轴上这个时间的值应该是15*24+19
+     */
+    public int parseHour2Ten(String time) {
+        return Integer.parseInt(time.substring(6, 8)) * 24 +
+                Integer.parseInt(time.substring(8, 10));
     }
 
 
