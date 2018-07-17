@@ -288,10 +288,7 @@ public class LineChartActivity extends AppCompatActivity {
             List<Line> lines = new ArrayList();
 
 
-
-
-
-            for(int i=0;i<numberOfPoints;i++){
+            for (int i = 0; i < numberOfPoints; i++) {
                 AxisValue axisValue = new AxisValue(i);
 //            这句话就关键了，你可以随意设置这个位置显示的东西，string类型的随意来
 //            我这边想设置，几月几日几时
@@ -307,7 +304,6 @@ public class LineChartActivity extends AppCompatActivity {
                     float xValue = randomNumbersTab[i][j];
                     values.add(new PointValue(j, xValue));
                 }
-
 
 
                 Line line = new Line(values);
@@ -346,6 +342,17 @@ public class LineChartActivity extends AppCompatActivity {
 
             data.setBaseValue(Float.NEGATIVE_INFINITY);
             chart.setLineChartData(data);
+
+
+            //x轴超过六个，就通过左右滑动查看x轴更多的数据
+            Viewport viewportMax = new Viewport(-0.7f, chart.getMaximumViewport().height() * 1.25f, numberOfPoints > 6 ? 6 : numberOfPoints, 0);
+            chart.setMaximumViewport(viewportMax);
+            //通过left, top, right, bottom四边确定的一个矩形区域。//用来控制视图窗口的缩放。
+            Viewport viewport = new Viewport(0, chart.getMaximumViewport().height() * 1.25f, numberOfPoints > 6 ? 6 : numberOfPoints, 0);
+
+            chart.setCurrentViewport(viewport);
+            chart.moveTo(0, 0);
+
 
         }
 
