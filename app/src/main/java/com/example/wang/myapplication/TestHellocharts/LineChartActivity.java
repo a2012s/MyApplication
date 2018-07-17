@@ -22,6 +22,7 @@ import lecho.lib.hellocharts.animation.ChartAnimationListener;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -82,7 +83,7 @@ public class LineChartActivity extends AppCompatActivity {
         private LineChartView chart;
         private LineChartData data;
         private int numberOfLines = 1;
-        private int maxNumberOfLines = 4;//
+        private int maxNumberOfLines = 1;//
         private int numberOfPoints = 10;//十个点的统计数据
 
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
@@ -100,6 +101,9 @@ public class LineChartActivity extends AppCompatActivity {
         private boolean hasGradientToTransparent = false;
 
         private Toolbar mToolbar;
+
+        //    横坐标集合，可以设置标注名称，就是x轴的值集合，可以是0-100，也可以是10000-20000
+        List mAxisXValues = new ArrayList();
 
         public PlaceholderFragment() {
         }
@@ -282,12 +286,29 @@ public class LineChartActivity extends AppCompatActivity {
         private void generateData() {
 
             List<Line> lines = new ArrayList();
+
+
+
+
+
+            for(int i=0;i<numberOfPoints;i++){
+                AxisValue axisValue = new AxisValue(i);
+//            这句话就关键了，你可以随意设置这个位置显示的东西，string类型的随意来
+//            我这边想设置，几月几日几时
+                axisValue.setLabel("7日" + i + "时");
+                mAxisXValues.add(axisValue);
+            }
+
+
             for (int i = 0; i < numberOfLines; ++i) {
 
                 List<PointValue> values = new ArrayList();
                 for (int j = 0; j < numberOfPoints; ++j) {
-                    values.add(new PointValue(j, randomNumbersTab[i][j]));
+                    float xValue = randomNumbersTab[i][j];
+                    values.add(new PointValue(j, xValue));
                 }
+
+
 
                 Line line = new Line(values);
                 line.setColor(ChartUtils.COLORS[i]);
@@ -308,7 +329,7 @@ public class LineChartActivity extends AppCompatActivity {
             data = new LineChartData(lines);
 
             if (hasAxes) {
-                Axis axisX = new Axis().setHasSeparationLine(true).setHasLines(true);
+                Axis axisX = new Axis().setHasSeparationLine(true).setHasLines(true).setValues(mAxisXValues);
                 // Axis axisY = new Axis().setHasLines(false);
                 Axis axisY = new Axis().setHasSeparationLine(false).setHasLines(false)
                         .setHasTiltedLabels(false).setHasTiltedLabels(false);
