@@ -58,7 +58,7 @@
 
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_replay"
+        android:id="@+id/iv_left"
         android:layout_width="48dp"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -67,7 +67,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="10dp"
-        app:srcCompat="@drawable/ic_re_play" />
+        app:srcCompat="@mipmap/previous" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iv_next"
@@ -80,7 +80,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="10dp"
-        app:srcCompat="@drawable/ic_next" />
+        app:srcCompat="@mipmap/next" />
 
 
 </RelativeLayout>

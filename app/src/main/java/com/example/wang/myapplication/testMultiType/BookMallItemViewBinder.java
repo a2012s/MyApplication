@@ -56,7 +56,7 @@ public class BookMallItemViewBinder extends ItemViewBinder<BookMallItem, BookMal
     @Override
     protected void onBindViewHolder(@NonNull TextHolder holder, @NonNull BookMallItem item) {
 
-        holder.tv_name.setText( item.name);
+        holder.tv_name.setText(item.name);
         holder.tv_detail.setText(item.details);
         holder.tv_apply_detail.setText(item.apply);
         GlideUtils.loadRoundCircleImage(holder.iv_head.getContext(), item.url, holder.iv_head);

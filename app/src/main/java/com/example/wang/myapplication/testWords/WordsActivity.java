@@ -3,6 +3,7 @@ package com.example.wang.myapplication.testWords;
  * 单词页面
  * **********************************************************/
 
+import android.drm.DrmStore;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -35,7 +36,7 @@ public class WordsActivity extends AppCompatActivity {
 
     private TextView tv_left, tv_right;
 
-    private AppCompatImageView iv_next, iv_replay, iv_play;
+    private AppCompatImageView iv_next, iv_left, iv_play;
 
     private FragmentPre first = new FragmentPre();
     private FragmentNext third = new FragmentNext();
@@ -57,20 +58,36 @@ public class WordsActivity extends AppCompatActivity {
         tv_left = findViewById(R.id.tv_left);
         tv_right = findViewById(R.id.tv_right);
 
+        iv_left = findViewById(R.id.iv_left);
+        iv_play = findViewById(R.id.iv_play);
+
 
         iv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tv_left.setText(num + "/" + wordsCount);
                 if (num >= wordsCount) {
                     Toast.makeText(WordsActivity.this, "完成了", Toast.LENGTH_SHORT).show();
                 } else {
+                    tv_left.setText((num + 1) + "/" + wordsCount);
                     switchFragment(third, RIGHT).commit();
                 }
             }
         });
-        iv_replay = findViewById(R.id.iv_replay);
-        iv_play = findViewById(R.id.iv_play);
+
+
+        iv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (num == 1) {
+                    Toast.makeText(WordsActivity.this, "没有了", Toast.LENGTH_SHORT).show();
+                } else {
+                    tv_left.setText((num - 1) + "/" + wordsCount);
+                    switchFragment(first, LEFT).commit();
+                }
+            }
+        });
+
 
         mProgressBarHorizontal.setMax(wordsCount);
 
@@ -88,12 +105,11 @@ public class WordsActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
-        if (i == iNow && i != RIGHT) {
-            //doNothing
-            Log.e("logcat", "i==i==" + i);
-
-        } else if (i < iNow) {
+        if (i == LEFT) {
             Log.e("logcat", "i < ii;i==" + i);
+            if (num > 1) {
+                num--;
+            }
             transaction.setCustomAnimations(
                     R.anim.slide_left_in,
                     R.anim.slide_right_out,
@@ -101,7 +117,8 @@ public class WordsActivity extends AppCompatActivity {
                     R.anim.slide_left_out
 
             );
-        } else {
+        } else if (i == RIGHT) {
+            num++;
             Log.e("logcat", "i >= ii;i==" + i);
             transaction.setCustomAnimations(
                     R.anim.slide_right_in,
@@ -110,14 +127,6 @@ public class WordsActivity extends AppCompatActivity {
                     R.anim.slide_right_out
 
             );
-        }
-
-        if (i == 1) {
-            if (num > 1) {
-                num--;
-            }
-        } else if (i == 3) {
-            num++;
         }
 
 

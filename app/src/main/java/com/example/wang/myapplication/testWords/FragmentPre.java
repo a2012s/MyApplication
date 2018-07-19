@@ -46,7 +46,7 @@ public class FragmentPre extends BaseFragment {
         super.onHiddenChanged(hidden);
         if (hidden) {
             //Fragment隐藏时调用
-            Toast.makeText(getActivity(), "隐藏fragment 1", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "隐藏fragment 1", Toast.LENGTH_SHORT).show();
         } else {
             //Fragment显示时调用
             //mTextView.setText("显示fragmentPre" + num);
