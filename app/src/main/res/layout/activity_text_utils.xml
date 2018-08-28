@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="倒计时" />
+
+            <com.example.wang.myapplication.utils.JustifyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guangdong-Hong Kong-Macao Greater Bay Area | WeChat and Alipay accepted at GZ-SZ-HK High Speed Station广深港高铁香港段9月下旬通车，可微信、支付宝购票China is able to achieve ethnic harmony, economic growth and social progress in Xinjiangthanks to three basic principles. The first is equality of all ethnic groups.It is China's consistent position to oppose ethnic discrimination of all forms against any group,and to prohibit all moves that undermine unity and incite division.Recent initiatives, such as aimed to eradicate poverty and achieve common prosperityby focusing on the most needy, are welcomed by all ethnic groups in Xinjiang.今年年初，三星发布了Exynos 9810旗舰处理器，其CPU为三星第三代自研猫鼬（Mongoose）架构：Exynos M3。一直以来，外界对于Exynos M3知之甚少，终于在昨天的HotChips会议上，三星官方披露了Exynos M3的详细设计，让外界得以一窥这款超级架构。" />
+
+            <TextView
+                android:id="@+id/tv_about_spannable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

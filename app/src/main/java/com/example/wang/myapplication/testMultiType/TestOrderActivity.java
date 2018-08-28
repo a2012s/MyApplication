@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.example.wang.myapplication.R;
 
-import java.util.Random;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -56,12 +55,14 @@ public class TestOrderActivity extends Activity {
         adapter = new MultiTypeAdapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.register(OrderItem.class, new OrderItemViewBinder());
+        // adapter.register(OrderItem.class, new OrderItemViewBinder());
+        adapter.register(RankItem.class, new RankItemViewBinder());
 
         urlHead = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=302701032,2300144492&fm=27&gp=0.jpg";
         items = new Items();
         for (int i = 0; i < 10; i++) {
-            items.add(new OrderItem(urlHead, "付费课程包", "内含10本书", "2017.01.01-2019.01.01", "初中", "已购买"));
+            // items.add(new OrderItem(urlHead, "付费课程包", "内含10本书", "2017.01.01-2019.01.01", "初中", "已购买"));
+            items.add(new RankItem(i, urlHead, "xiao", "2017.08.30 17:25:30", "100", "98"));
         }
         adapter.setItems(items);
         adapter.notifyDataSetChanged();
@@ -83,23 +84,23 @@ public class TestOrderActivity extends Activity {
                 // 一些比较耗时的操作，比如联网获取数据，需要放到子线程去执行
                 // TODO 获取数据
                 urlHead = "http://pic1.cxtuku.com/00/01/78/b374df6c27cb.jpg";
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        //items.add(new HeavyItem("我是天才" + random.nextInt(100) + "号"));
-                        items.clear();
-                        for (int i = 0; i < 10; i++) {
-                            items.add(new OrderItem(urlHead, "付费课程包", "内含11本书", "2018.01.01-2019.01.01", "初中、高中", "赠送"));
-                        }
-                        adapter.notifyDataSetChanged();
-
-                        Toast.makeText(TestOrderActivity.this, "刷新了数据", Toast.LENGTH_SHORT).show();
-
-                        // 加载完数据设置为不刷新状态，将下拉进度收起来
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 1200);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        //items.add(new HeavyItem("我是天才" + random.nextInt(100) + "号"));
+//                        items.clear();
+//                        for (int i = 0; i < 10; i++) {
+//                            items.add(new OrderItem(urlHead, "付费课程包", "内含11本书", "2018.01.01-2019.01.01", "初中、高中", "赠送"));
+//                        }
+//                        adapter.notifyDataSetChanged();
+//
+//                        Toast.makeText(TestOrderActivity.this, "刷新了数据", Toast.LENGTH_SHORT).show();
+//
+//                        // 加载完数据设置为不刷新状态，将下拉进度收起来
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }, 1200);
 
                 // System.out.println(Thread.currentThread().getName());
 

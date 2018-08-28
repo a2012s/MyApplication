@@ -3,7 +3,6 @@ package com.example.wang.myapplication.testWords;
  * 单词页面
  * **********************************************************/
 
-import android.drm.DrmStore;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +24,8 @@ public class WordsActivity extends AppCompatActivity {
 
     private Fragment currentFragment = new Fragment();
 
+    private FragmentWordDetail wordDetailFragment = new FragmentWordDetail();
+
     private int iNow = 0;
     private int num = 1;
     private int wordsCount = 10;
@@ -38,9 +39,6 @@ public class WordsActivity extends AppCompatActivity {
 
     private AppCompatImageView iv_next, iv_left, iv_play;
 
-    private FragmentPre first = new FragmentPre();
-    private FragmentNext third = new FragmentNext();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +47,14 @@ public class WordsActivity extends AppCompatActivity {
 
         initView();
 
-        switchFragment(first, 0).commit();
+        switchFragment(wordDetailFragment, 0).commit();
     }
 
     private void initView() {
         iv_next = findViewById(R.id.iv_next);
         mProgressBarHorizontal = findViewById(R.id.pb_w);
+        mProgressBarHorizontal.setMax(wordsCount);
+
         tv_left = findViewById(R.id.tv_left);
         tv_right = findViewById(R.id.tv_right);
 
@@ -69,7 +69,7 @@ public class WordsActivity extends AppCompatActivity {
                     Toast.makeText(WordsActivity.this, "完成了", Toast.LENGTH_SHORT).show();
                 } else {
                     tv_left.setText((num + 1) + "/" + wordsCount);
-                    switchFragment(third, RIGHT).commit();
+                    switchFragment(wordDetailFragment, RIGHT).commit();
                 }
             }
         });
@@ -83,13 +83,12 @@ public class WordsActivity extends AppCompatActivity {
                     Toast.makeText(WordsActivity.this, "没有了", Toast.LENGTH_SHORT).show();
                 } else {
                     tv_left.setText((num - 1) + "/" + wordsCount);
-                    switchFragment(first, LEFT).commit();
+                    switchFragment(wordDetailFragment, LEFT).commit();
                 }
             }
         });
 
 
-        mProgressBarHorizontal.setMax(wordsCount);
 
 
         iv_play.setOnClickListener(new View.OnClickListener() {

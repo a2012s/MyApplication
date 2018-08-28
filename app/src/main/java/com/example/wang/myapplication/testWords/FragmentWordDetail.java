@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentNext extends BaseFragment {
+public class FragmentWordDetail extends BaseFragment {
 
 
     private TextView mTextView;

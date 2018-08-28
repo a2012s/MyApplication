@@ -1,22 +1,33 @@
 package com.example.wang.myapplication.TestHellocharts;
 
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wang.myapplication.R;
+import com.example.wang.myapplication.utils.MyTextTool;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 import lecho.lib.hellocharts.animation.ChartAnimationListener;
 import lecho.lib.hellocharts.gesture.ZoomType;
@@ -38,33 +49,66 @@ public class LineChartActivity extends AppCompatActivity {
     private int num;
 
 
+    private int test = 9;
+    private PlaceholderFragment fragment;
+    private Bundle bundle;
+    private int selectNo = 1;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
 
+
+        
+
+
         bar_annulus = findViewById(R.id.bar_annulus);
         num = (int) (Math.random() * 100 + 1);//1到100的随机数
-
 
         bar_annulus.setTitle(num + "/100");
         bar_annulus.setCurrentValues(num);
 
 
+        fragment = new PlaceholderFragment();
+        bundle = new Bundle();
+
+        //fragment保存参数，传入一个Bundle对象
         bar_annulus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 num = (int) (Math.random() * 100 + 1);//1到100的随机数
                 bar_annulus.setCurrentValues(num);
                 bar_annulus.setTitle(num + "/100");
+
+                bundle.putString("num", num + "");
+                // bundle.putInt("select", (int) (Math.random() * 2 + 1));//1到2
+
+                if (selectNo == 1) {
+                    selectNo = 2;
+                } else {
+                    selectNo = 1;
+                }
+                bundle.putInt("select", selectNo);//1或2
+
+                fragment.setArguments(bundle);
+                // test = num;
+                fragment.generateData();
+
+
             }
         });
 
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment, new PlaceholderFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment).commit();
         }
     }
+
+
 
     /**
      * dp转换成px
@@ -101,9 +145,14 @@ public class LineChartActivity extends AppCompatActivity {
         private boolean hasGradientToTransparent = false;
 
         private Toolbar mToolbar;
+        List<Line> lines = new ArrayList();
+        private Bundle getArgumentss;
 
         //    横坐标集合，可以设置标注名称，就是x轴的值集合，可以是0-100，也可以是10000-20000
         List mAxisXValues = new ArrayList();
+        private String num;
+        private int selectN0;
+
 
         public PlaceholderFragment() {
         }
@@ -115,6 +164,7 @@ public class LineChartActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
             //  mToolbar = rootView.findViewById(R.id.toolbar);
             //setSupportActionBar(mToolbar);
+
 
             chart = rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
@@ -132,7 +182,7 @@ public class LineChartActivity extends AppCompatActivity {
             generateData();
 
             // Disable viewport recalculations, see toggleCubic() method for more info.
-            chart.setViewportCalculationEnabled(false);
+            chart.setViewportCalculationEnabled(true);
 
             //((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
@@ -284,15 +334,65 @@ public class LineChartActivity extends AppCompatActivity {
         }
 
         private void generateData() {
+            getArgumentss = getArguments();
 
-            List<Line> lines = new ArrayList();
+            mAxisXValues.clear();
+            lines.clear();
 
+
+            String arrayXStr1[] = {"7.9","7.9"};//{"7.9", "7.10", "7.11", "7,12", "7.13", "7.14"};
+            Float xValue1[] = {76f,76f};//{76f, 89f, 12f, 50f, 12f, 90.00f};
+
+
+            String arrayXStr2[] = {"8.9","9.0"};//{"8.9", "8.10", "8.11", "8.12", "8.13", "8.14"};
+            Float xValue2[] = {86f,45f};//{86f, 89f, 82f, 50f, 82f, 80.00f};
+
+            String arrayXStr[] = new String[arrayXStr2.length];
+            Float xValues[] = new Float[arrayXStr2.length];
+
+            // Map<String, Float> dataMap = new HashMap<>();
+
+            // dataMap.put()
+
+
+            if (getArgumentss == null) {
+                selectN0 = 1;
+                num = "6";
+
+            } else {
+                // num = getArgumentss.getString("num");
+                num = "6";
+                selectN0 = getArgumentss.getInt("select", 1);
+
+//                if (selectN0 == 1) {
+//                    arrayXStr = arrayXStr1;
+//                    xValues = xValue1;
+//                } else if (selectN0 == 2) {
+//                    arrayXStr = arrayXStr2;
+//                    xValues = xValue2;
+//
+//                } else {
+//                    arrayXStr = new String[0];
+//                    xValues = new Float[0];
+//
+//                }
+                //numberOfPoints = arrayXStr1.length;
+
+            }
+            numberOfPoints = arrayXStr1.length;
 
             for (int i = 0; i < numberOfPoints; i++) {
                 AxisValue axisValue = new AxisValue(i);
 //            这句话就关键了，你可以随意设置这个位置显示的东西，string类型的随意来
 //            我这边想设置，几月几日几时
-                axisValue.setLabel("7日" + i + "时");
+                //  axisValue.setLabel(num + "日" + i);
+                if (selectN0 == 1) {
+                    axisValue.setLabel(arrayXStr1[i]);
+                } else {
+                    axisValue.setLabel(arrayXStr2[i]);
+                }
+
+
                 mAxisXValues.add(axisValue);
             }
 
@@ -301,7 +401,15 @@ public class LineChartActivity extends AppCompatActivity {
 
                 List<PointValue> values = new ArrayList();
                 for (int j = 0; j < numberOfPoints; ++j) {
-                    float xValue = randomNumbersTab[i][j];
+                    // float xValue = randomNumbersTab[i][j];
+                    float xValue;
+                    if (selectN0 == 1) {
+                        xValue = xValue1[j];
+                    } else {
+                        xValue = xValue2[j];
+                    }
+
+
                     values.add(new PointValue(j, xValue));
                 }
 
@@ -353,6 +461,8 @@ public class LineChartActivity extends AppCompatActivity {
             chart.setCurrentViewport(viewport);
             chart.moveTo(0, 0);
 
+
+            resetViewport();
 
         }
 

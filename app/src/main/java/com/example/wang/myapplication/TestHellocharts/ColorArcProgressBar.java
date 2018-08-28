@@ -44,7 +44,7 @@ public class ColorArcProgressBar extends View {
     private SweepGradient sweepGradient;
     private Matrix rotateMatrix;
 
-    private float startAngle = 135;
+    private float startAngle = -90;//0为右边中；135
     private float sweepAngle = 270;
     private float currentAngle = 0;
     private float lastAngle;
@@ -65,7 +65,7 @@ public class ColorArcProgressBar extends View {
     private String longDegreeColor = "#111111";
     private String shortDegreeColor = "#111111";
     private String titleColor = "#F34546";
-    private String bgArcColor = "#000000";//圆环默认的背景色
+    private String bgArcColor = "#DC143C";//圆环默认的背景色，进度条颜色
     private String titleString;
     private String hintString;
 
