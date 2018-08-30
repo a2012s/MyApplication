@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -15,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wang.myapplication.R;
+import com.example.wang.myapplication.utils.JustifyTextView;
 import com.example.wang.myapplication.utils.MyTextTool;
+
+import java.util.HashMap;
 
 /**
  * Created by wjj on 2018/8/11 18:31
@@ -25,62 +29,110 @@ import com.example.wang.myapplication.utils.MyTextTool;
 public class TestMyTextActivity extends AppCompatActivity {
     //activity_text_utils
 
+    ClickableSpan clickableSpan;
+
+    String paper = " Some of my  friends drove me to the airport a few months ago. On the whole ride there, I didn\\'t know that two of them wrote some __1__ and put them everywhere in my luggage (行李)．\n" +
+            "    When I __2__ the airport and opened my luggage, I found some encouraging notes all over my clothes and bags. And they had __3__ put them inside my backpack! So in the next month, I would find an encouraging note when taking a pen or a book.\n" +
+            "    I __4__ all these notes on the wall next to my bed. They were small signs of love from my friends.\n" +
+            "    Today, two months __5__， I wanted to send my neighbor some kindness for his birthday. He\\'s someone who has given much to many people—families, friends  and strangers—and I thought that there was no __6__ that would be better than a small act of kindness.\n" +
+            "    While I was trying to decide __7__ I could do, I found the encouraging notes on my wall. It was __8__! I took down some of them and walked around my neighbor's house, putting them __9__—on the window, the door and the wall.\n" +
+            "        It made me smile to __10__ the good friends that wrote these notes eight weeks ago, and to see how these little __11__ messages would travel around my __12__ neighborhood sharing joy with him!";
+
     CountDownTimer timer;
     private TextView tv_about_spannable;
-    private TextView tv;
+    private JustifyTextView tv_paper;
     int mCount = 3;
+    int select;
+
+    HashMap<Integer, String> mHashMap = new HashMap();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_utils);
 
-
-        tv = (TextView) findViewById(R.id.tv);
-
-
-        /** 倒计时n秒，一次1秒 */
-//        timer = new CountDownTimer(3 * 1000, 100) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                // TODO Auto-generated method stub
-//                tv.setText("还剩0." + millisUntilFinished / 100 + "秒");
-//                Log.e("logcat", "millisUntilFinished=" + millisUntilFinished);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                tv.setText("倒计时完毕了");
-//            }
-//        };
-
-        timer = new CountDownTimer(mCount * 1000, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.e("logcat", "onTick----l==" + millisUntilFinished);
-                tv.setText("还剩0." + ((int) millisUntilFinished / 100 - 1) + " 秒");
-            }
-
-            @Override
-            public void onFinish() {
-                Log.d("logcat", "onFinish-------");
-                tv.setText("finish！");
-            }
-        };
-
-
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                timer.start();
-
-
-            }
-        });
+        setPaper(paper, 0);
 
 
         tv_about_spannable = findViewById(R.id.tv_about_spannable);
         testMyText();
+    }
+
+    private void setPaper(String paper2, final int select) {
+        Log.e("logcat", "setPaper=" + paper2);
+        String paperS[] = paper2.split("__[1-9][0-9]?__");
+
+
+        tv_paper = findViewById(R.id.tv_paper);
+        // 响应点击事件的话必须设置以下属性
+        tv_paper.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+        //  tv_paper.setText(paper);
+
+
+        tv_paper.setText("");
+
+        MyTextTool.Builder thisText = MyTextTool.getBuilder(TestMyTextActivity.this, "");
+
+        int leng = paperS.length;
+
+
+        for (int i = 0; i < leng; i++) {
+            Log.e("logcat", paperS[i] + ";clickableSpan=" + (clickableSpan == null));
+            final int finalI = i;
+
+            String inStr = String.valueOf(i + 1);
+
+            if (select == 0) {
+                inStr = "__" + (i + 1) + "__";
+            } else {
+
+                if (!TextUtils.isEmpty(mHashMap.get(i))) {
+                    inStr = mHashMap.get(i);
+                }
+            }
+
+            if (i == (leng - 1)) {
+                thisText.append(paperS[i]);
+                break;
+            }
+
+            thisText.append(paperS[i]).append(inStr).setClickSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View v) {
+                    toDo(finalI);
+                }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    ds.setColor(Color.BLUE);
+                    ds.setUnderlineText(false);
+                }
+            });
+
+
+        }
+
+        thisText.into(tv_paper);
+    }
+
+    private void toDo(int i) {
+
+        String inStr;//=mHashMap.get(i);
+        if (TextUtils.isEmpty(mHashMap.get(i))) {
+            inStr = "__#" + i;
+        } else {
+            inStr = mHashMap.get(i);
+        }
+
+        mHashMap.put(i, "__#点击" + i);
+        Toast.makeText(TestMyTextActivity.this, "点击" + (i + 1), Toast.LENGTH_SHORT).show();
+//        Log.e("logcat", "点击" + (i + 1));
+//        paper = tv_paper.getText().toString().replace(inStr, mHashMap.get(i));
+//        setPaper(paper, i);
+
     }
 
     private void testMyText() {
